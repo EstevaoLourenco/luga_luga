@@ -6,9 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
-    <ListView
-        android:id="@+id/listaNomes"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listaProdutos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
