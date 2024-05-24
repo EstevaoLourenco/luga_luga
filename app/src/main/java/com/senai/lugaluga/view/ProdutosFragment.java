@@ -1,19 +1,18 @@
 package com.senai.lugaluga.view;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.senai.lugaluga.R;
@@ -24,58 +23,73 @@ import com.senai.lugaluga.view.adapter.AdapterProduto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ProdutosFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ProdutosFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AdapterProduto adapterProduto;
     private List<Produto> produtoList = new ArrayList<>();
 
-    private AlertDialog dialog;
+
+    public ProdutosFragment() {
+        // Required empty public constructor
+    }
+    public static ProdutosFragment newInstance(String param1, String param2) {
+        ProdutosFragment fragment = new ProdutosFragment();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Produtos");
-        myToolbar.setTitleTextColor(getColor(R.color.white));
-        setSupportActionBar(myToolbar);
+    }
 
-        recyclerView = findViewById(R.id.rvlistaProdutos);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        View view = inflater.inflate(R.layout.fragment_produtos, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvlistaProdutos);
 
         CriarListaProdutos();
 
         adapterProduto = new AdapterProduto(produtoList);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterProduto);
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
-                        getApplicationContext(),
+                        getContext(),
                         recyclerView,
                         new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(MainActivity.this, ProdutoActivity.class);
-                intent.putExtra("produto", produtoList.get(position));
-                startActivity(intent);
-            }
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent intent = new Intent(getContext(), ProdutoActivity.class);
+                                intent.putExtra("produto", produtoList.get(position));
+                                startActivity(intent);
+                            }
 
-            @Override
-            public void onLongItemClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), produtoList.get(position).getStatus(), Toast.LENGTH_SHORT).show();
-            }
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                Toast.makeText(getContext(), produtoList.get(position).getStatus(), Toast.LENGTH_SHORT).show();
+                            }
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        }));
+                            }
+                        }));
 
+        return view;
     }
 
     public void CriarListaProdutos(){
@@ -108,5 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 }
