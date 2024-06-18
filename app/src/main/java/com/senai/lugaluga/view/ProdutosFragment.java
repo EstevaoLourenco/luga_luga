@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.senai.lugaluga.R;
 import com.senai.lugaluga.RecyclerItemClickListener;
+import com.senai.lugaluga.controller.ProdutosController;
 import com.senai.lugaluga.model.Produto;
 import com.senai.lugaluga.view.adapter.AdapterProduto;
 
@@ -93,35 +94,8 @@ public class ProdutosFragment extends Fragment {
     }
 
     public void CriarListaProdutos(){
-
-        Produto produto;
-
-        produto = new Produto("IPhone 13", "Iphone 13 64gb", 200.00, 10, "Disponível");
-        produtoList.add(produto);
-
-        produto = new Produto("Fone", "Bluetooth", 25.00, 120, "Indisponível");
-        produtoList.add(produto);
-
-        produto = new Produto("Notebook", "16gb RAM 1TB-SSD", 250, 5, "Indisponível");
-        produtoList.add(produto);
-
-        produto = new Produto("IPad", "8gb RAM", 200, 10, "Indisponível");
-        produtoList.add(produto);
-
-        produto = new Produto("Tablet", "SamSung 8gb", 50.00, 120, "Disponível");
-        produtoList.add(produto);
-
-        produto = new Produto("SmartPhone S23", "não compre", 70.00, 12, "Disponível");
-        produtoList.add(produto);
-
-        produto = new Produto("MacBook", "M3 1TB-SSD", 425.50 , 6, "Indisponível");
-        produtoList.add(produto);
-
-        produto = new Produto("IPhone 15", "124gb RAM", 125.90, 8, "Disponível");
-        produtoList.add(produto);
-
-
+        ProdutosController produtosController = new ProdutosController(getContext());
+        produtoList.addAll(produtosController.carregaProdutos());
     }
-
 
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.senai.lugaluga.R;
+import com.senai.lugaluga.controller.Usuario2Controller;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Pattern pattern;
                 Matcher matcher;
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                String EMAIL_PATTERN =
+                        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 pattern = Pattern.compile(EMAIL_PATTERN);
                 CharSequence cs = (CharSequence) s;
                 matcher = pattern.matcher(cs);
@@ -60,11 +62,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
         Intent intent = new Intent(this, MainActivity2.class);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validaEmailSenha()) {
+                if (validaEmailSenha() && verificaUsuario()) {
                     startActivity(intent);
                 }
             }
@@ -79,6 +82,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean verificaUsuario() {
+
+        Usuario2Controller usuario2Controller = new Usuario2Controller(getApplicationContext());
+
+        if (usuario2Controller.verificaUsuario(inputEmail.getEditText().getText().toString(),
+                inputSenha.getEditText().getText().toString() )){
+            return true;
+        }
+
+        return false;
     }
 
     public boolean validaEmailSenha() {
